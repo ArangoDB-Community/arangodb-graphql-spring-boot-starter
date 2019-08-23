@@ -1,0 +1,10 @@
+arangodb:
+  hosts:
+  user:
+  password:
+  useSsl: false
+  database: _system
+
+logging:
+  level:
+    com.arangodb.graphql: trace

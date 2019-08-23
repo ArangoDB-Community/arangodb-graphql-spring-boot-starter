@@ -720,3 +720,15 @@ type ConvertibleCar implements Car @vertex(collection: "Cars") @alias(name: "com
     roofType: String!
 }
 ```
+
+
+## Test
+
+To run the tests a running instance of ArangoDB is required, which can be started using docker:
+```shell script
+docker run -p 8529:8529 -d -e ARANGO_NO_AUTH=1 --name arangodb arangodb/arangodb:3.5.0
+``` 
+and the graph examples should be loaded. For example for the `city` profile, the following is required:
+```shell script
+docker exec arangodb arangosh --javascript.execute-string='require("@arangodb/graph-examples/example-graph.js").loadGraph("routeplanner")'
+```

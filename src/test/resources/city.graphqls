@@ -1,0 +1,44 @@
+directive @edge(collection : String!, direction: String!) on FIELD_DEFINITION
+directive @vertex(collection : String!) on OBJECT
+directive @edgeTarget on FIELD_DEFINITION
+
+type Geometry {
+    coordinates: [Float]
+}
+
+interface City {
+    _key: String!
+    geometry: Geometry
+    isCapital: Boolean
+    population: Int
+    domesticDestination: [Destination]
+    internationalDestinations: [Destination]
+}
+
+type Destination {
+    distance: Int
+    city: City @edgeTarget
+}
+
+type GermanCity implements City @vertex(collection: "germanCity") {
+    _key: String!
+    geometry: Geometry
+    isCapital: Boolean
+    population: Int
+    domesticDestination: [Destination] @edge(collection:"germanHighway", direction:"outbound")
+    internationalDestinations: [Destination] @edge(collection:"internationalHighway", direction:"outbound")
+}
+
+type FrenchCity implements City @vertex(collection: "frenchCity") {
+    _key: String!
+    geometry: Geometry
+    isCapital: Boolean
+    population: Int
+    domesticDestination: [Destination] @edge(collection:"frenchHighway", direction:"outbound")
+    internationalDestinations: [Destination] @edge(collection:"internationalHighway", direction:"outbound")
+}
+
+type Query {
+    germany(_key: String): [GermanCity]
+    france: [FrenchCity]
+}
