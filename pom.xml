@@ -139,11 +139,6 @@
             <artifactId>arangodb-graphql-spring</artifactId>
             <version>${project.version}</version>
         </dependency>
-        <dependency>
-            <groupId>com.arangodb</groupId>
-            <artifactId>arangodb-graphql</artifactId>
-            <version>${project.version}</version>
-        </dependency>
     </dependencies>
 
     <distributionManagement>
