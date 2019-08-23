@@ -1,0 +1,5 @@
+directive @edge(collection : String!, direction: String!) on FIELD_DEFINITION
+directive @edgeTarget on FIELD_DEFINITION
+directive @vertex(collection : String!) on OBJECT
+directive @discriminator(property : String) on INTERFACE | UNION
+directive @alias(name : String) on OBJECT
