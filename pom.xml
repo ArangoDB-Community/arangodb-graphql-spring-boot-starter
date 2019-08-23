@@ -117,7 +117,6 @@
         </dependency>
     </dependencies>
 
-
     <distributionManagement>
         <snapshotRepository>
             <id>ossrh</id>
@@ -137,9 +136,9 @@
     </repositories>
 
     <scm>
-        <url>https://github.com/arangodb/arangodb-graphql-java</url>
-        <connection>scm:git:git://github.com/arangodb/arangodb-graphql-java.git</connection>
-        <developerConnection>scm:git:git://github.com/arangodb/arangodb-graphql-java.git</developerConnection>
+        <url>https://github.com/ArangoDB-Community/arangodb-graphql-java</url>
+        <connection>scm:git:git://github.com/ArangoDB-Community/arangodb-graphql-java.git</connection>
+        <developerConnection>scm:git:git://github.com/ArangoDB-Community/arangodb-graphql-java.git</developerConnection>
     </scm>
 
     <organization>
