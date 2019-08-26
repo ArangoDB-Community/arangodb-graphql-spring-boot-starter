@@ -10,7 +10,7 @@ To get started, first add the starter to your project
 <dependency>
   <groupId>com.arangodb</groupId>
   <artifactId>arangodb-graphql-spring-boot-starter</artifactId>
-  <version>1.0-SNAPSHOT</version>
+  <version>1.0</version>
 </dependency>
 ```
 
