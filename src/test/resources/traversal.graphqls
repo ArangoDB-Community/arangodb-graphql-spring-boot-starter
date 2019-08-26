@@ -1,0 +1,18 @@
+directive @edge(collection : String!, direction: String!) on FIELD_DEFINITION
+directive @vertex(collection : String!) on OBJECT
+directive @edgeTarget on FIELD_DEFINITION
+
+type Circle @vertex(collection: "circles") {
+    _key: String
+    label: String
+    circles: [Edge]! @edge(collection: "edges", direction: "outbound")
+}
+
+type Edge {
+    label: String!
+    circle: Circle @edgeTarget
+}
+
+type Query {
+    findCircle(_key: String!): [Circle]
+}

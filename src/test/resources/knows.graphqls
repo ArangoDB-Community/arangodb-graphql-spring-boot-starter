@@ -1,0 +1,11 @@
+directive @edge(collection : String!, direction: String!) on FIELD_DEFINITION
+directive @vertex(collection : String!) on OBJECT
+
+type Person @vertex(collection: "persons") {
+    name: String!
+    knows: [Person] @edge(collection: "knows", direction: "outbound")
+}
+
+type Query {
+   findPerson(name: String!): [Person]
+}

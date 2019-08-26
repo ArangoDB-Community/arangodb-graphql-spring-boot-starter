@@ -1,0 +1,33 @@
+directive @edge(collection : String!, direction: String!) on FIELD_DEFINITION
+directive @vertex(collection : String!) on OBJECT
+directive @discriminator(property : String) on INTERFACE | UNION
+directive @alias(name : String) on OBJECT
+directive @edgeTarget on FIELD_DEFINITION
+
+interface Location @discriminator(property: "type") {
+    name: String
+}
+
+type Planet implements Location @vertex(collection: "worldVertices") @alias(name: "root") {
+    name: String
+    continents: [Continent] @edge(collection:"worldEdges", direction:"inbound")
+}
+
+type Continent implements Location @vertex(collection: "worldVertices") @alias(name: "continent") {
+    name: String
+    countries: [Country] @edge(collection:"worldEdges", direction:"inbound")
+}
+
+type Country implements Location @vertex(collection: "worldVertices") @alias(name: "country") {
+    name: String!
+    code: String
+    capital: City @edge(collection:"worldEdges", direction:"inbound")
+}
+
+type City implements Location @vertex(collection: "worldVertices") @alias(name: "capital") {
+    name: String
+}
+
+type Query {
+    world: [Planet]
+}

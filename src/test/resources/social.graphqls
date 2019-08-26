@@ -1,0 +1,31 @@
+directive @edge(collection : String!, direction: String!) on FIELD_DEFINITION
+directive @vertex(collection : String!) on OBJECT
+directive @edgeTarget on FIELD_DEFINITION
+
+interface SocialPerson {
+    name: String!
+    relations: [Relation] @edge(collection: "relation", direction: "outbound")
+}
+
+type Relation {
+    type: String!
+    to: SocialPerson @edgeTarget
+}
+
+type Female implements SocialPerson @vertex(collection: "female") {
+    name: String!
+    relations: [Relation] @edge(collection: "relation", direction: "outbound")
+}
+
+type Male implements SocialPerson @vertex(collection: "male") {
+    name: String!
+    relations: [Relation] @edge(collection: "relation", direction: "outbound")
+}
+
+
+type Query {
+
+    findMale(name: String!): [Male]
+    findFemale(name: String!): [Female]
+
+}

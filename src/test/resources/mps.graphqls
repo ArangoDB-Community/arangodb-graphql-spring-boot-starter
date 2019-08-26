@@ -1,0 +1,13 @@
+directive @edge(collection : String!, direction: String!) on FIELD_DEFINITION
+directive @vertex(collection : String!) on OBJECT
+directive @edgeTarget on FIELD_DEFINITION
+
+type MpsVertex @vertex(collection: "mps_verts") {
+    _key: String
+    vertices: [MpsVertex] @edge(collection: "mps_edges", direction: "outbound")
+}
+
+
+type Query {
+    findMpsVertex(_key: String!): [MpsVertex]
+}

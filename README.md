@@ -30,6 +30,42 @@ directive @edgeTarget on FIELD_DEFINITION
 These directives will be used to add metadata to your GraphQL schema to help map your GraphQL types to your underlying 
 physical data model in ArangoDB.
 
+# Requirements
+
+Currently, Java 8 is required. We plan to support newer Java versions in the future.
+
+The current implementation uses the sync driver for ArangoDB. We also plan to support the
+async driver in the future.
+
+# Building and Testing
+
+## Build the Libraries from scratch
+
+To get started you can build the root POM in this directory with 
+
+`mvn install`
+
+## Set up your ArangoDB database
+
+In ArangoDB - you can create any of the Example Graphs documented here:
+https://www.arangodb.com/docs/3.4/graphs.html#example-graphs
+
+## Configure your ArangoDB Connection Details
+
+Edit the `/src/main/resources/application.yaml` file to
+have your connection details in the arangodb section, as shown [here](/src/test/resources/application.yaml).
+
+## Run your example GraphQL Service
+
+In the [test resources](/src/test/resources), there is a Spring profile to match each of the example graphs. 
+The profile names are:
+- city
+- knows
+- mps
+- social
+- traversal
+- world
+
 # Example
 
 Let's walk through a simple example with a simple Graph. Our Graph contains two entities Owners and Cars. Owners and 
@@ -730,5 +766,5 @@ docker run -p 8529:8529 -d -e ARANGO_NO_AUTH=1 --name arangodb arangodb/arangodb
 ``` 
 and the graph examples should be loaded. For example for the `city` profile, the following is required:
 ```shell script
-docker exec arangodb arangosh --javascript.execute-string='require("@arangodb/graph-examples/example-graph.js").loadGraph("routeplanner")'
+docker exec arangodb arangosh --server.authentication=false --javascript.execute-string='require("@arangodb/graph-examples/example-graph.js").loadGraph("routeplanner")'
 ```

@@ -1,0 +1,54 @@
+directive @edge(collection : String!, direction: String!) on FIELD_DEFINITION
+directive @vertex(collection : String!) on OBJECT | INTERFACE
+directive @discriminator(property : String) on INTERFACE | UNION | OBJECT
+directive @alias(name : String) on OBJECT
+directive @edgeTarget on FIELD_DEFINITION
+
+type Owner @vertex(collection: "Owners") {
+    _id: String!
+    name: String!
+    cars(make: String, model: String, fuel: String): [Ownership] @edge(collection: "ownership", direction: "outbound")
+}
+
+type Ownership {
+    finance: String
+    car: Car @edgeTarget
+}
+
+type OwnedBy {
+    finance: String
+    owner: Owner @edgeTarget
+}
+
+interface Car  @vertex(collection: "Cars") @discriminator(property: "vehicleType") {
+    _id: String!
+    make: String!
+    model: String!
+    variant: String!
+    owners: [OwnedBy] @edge(collection: "ownership", direction: "inbound")
+}
+
+type StandardCar implements Car @vertex(collection: "Cars") @alias(name: "standard") {
+    _id: String!
+    make: String!
+    model: String!
+    variant: String!
+    owners: [OwnedBy] @edge(collection: "ownership", direction: "inbound")
+}
+
+type ConvertibleCar implements Car @vertex(collection: "Cars") @alias(name: "conv") {
+    _id: String!
+    make: String!
+    model: String!
+    variant: String!
+    owners: [OwnedBy] @edge(collection: "ownership", direction: "inbound")
+    roofType: String!
+}
+
+
+type Query {
+
+    findOwner(name: String): [Owner]
+    findCar(make: String, model: String): [Car]
+
+}
