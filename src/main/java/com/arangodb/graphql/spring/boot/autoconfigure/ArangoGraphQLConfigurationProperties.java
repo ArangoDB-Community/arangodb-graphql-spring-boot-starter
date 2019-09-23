@@ -115,91 +115,91 @@ public class ArangoGraphQLConfigurationProperties {
         this.schemaLocation = schemaLocation;
     }
 
-    public final String getDatabase() {
+    public String getDatabase() {
         return database;
     }
 
-    public final void setDatabase(final String database) {
+    public void setDatabase(final String database) {
         this.database = database;
     }
 
-    public final String getUser() {
+    public String getUser() {
         return user;
     }
 
-    public final void setUser(final String user) {
+    public void setUser(final String user) {
         this.user = user;
     }
 
-    public final String getPassword() {
+    public String getPassword() {
         return password;
     }
 
-    public final void setPassword(final String password) {
+    public void setPassword(final String password) {
         this.password = password;
     }
 
-    public final Collection<String> getHosts() {
+    public Collection<String> getHosts() {
         return hosts;
     }
 
-    public final void setHosts(final Collection<String> hosts) {
+    public void setHosts(final Collection<String> hosts) {
         this.hosts = hosts;
     }
 
-    public final Integer getTimeout() {
+    public  Integer getTimeout() {
         return timeout;
     }
 
-    public final void setTimeout(final Integer timeout) {
+    public void setTimeout(final Integer timeout) {
         this.timeout = timeout;
     }
 
-    public final Boolean getUseSsl() {
+    public Boolean getUseSsl() {
         return useSsl;
     }
 
-    public final void setUseSsl(final Boolean useSsl) {
+    public void setUseSsl(final Boolean useSsl) {
         this.useSsl = useSsl;
     }
 
-    public final Integer getMaxConnections() {
+    public Integer getMaxConnections() {
         return maxConnections;
     }
 
-    public final void setMaxConnections(final Integer maxConnections) {
+    public void setMaxConnections(final Integer maxConnections) {
         this.maxConnections = maxConnections;
     }
 
-    public final Long getConnectionTtl() {
+    public Long getConnectionTtl() {
         return connectionTtl;
     }
 
-    public final void setConnectionTtl(final Long connectionTtl) {
+    public void setConnectionTtl(final Long connectionTtl) {
         this.connectionTtl = connectionTtl;
     }
 
-    public final Boolean getAcquireHostList() {
+    public Boolean getAcquireHostList() {
         return acquireHostList;
     }
 
-    public final void setAcquireHostList(final Boolean acquireHostList) {
+    public void setAcquireHostList(final Boolean acquireHostList) {
         this.acquireHostList = acquireHostList;
     }
 
-    public final LoadBalancingStrategy getLoadBalancingStrategy() {
+    public LoadBalancingStrategy getLoadBalancingStrategy() {
         return loadBalancingStrategy;
     }
 
-    public final void setLoadBalancingStrategy(final LoadBalancingStrategy loadBalancingStrategy) {
+    public void setLoadBalancingStrategy(final LoadBalancingStrategy loadBalancingStrategy) {
         this.loadBalancingStrategy = loadBalancingStrategy;
     }
 
-    public final Protocol getProtocol() {
+    public Protocol getProtocol() {
         return protocol;
     }
 
-    public final void setProtocol(final Protocol protocol) {
+    public void setProtocol(final Protocol protocol) {
         this.protocol = protocol;
     }
 
