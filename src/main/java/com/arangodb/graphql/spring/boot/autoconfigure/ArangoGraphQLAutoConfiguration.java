@@ -22,35 +22,27 @@ package com.arangodb.graphql.spring.boot.autoconfigure;
 
 import com.arangodb.ArangoDB;
 import com.arangodb.graphql.ArangoDataFetcher;
+import com.arangodb.graphql.create.DatabaseObjectCreator;
 import com.arangodb.graphql.schema.runtime.ArangoRuntimeWiringBuilder;
 import com.arangodb.graphql.schema.runtime.TypeDiscriminatorRegistry;
 import com.arangodb.graphql.generator.ArangoQueryGeneratorChain;
 import com.arangodb.graphql.generator.DefaultArangoQueryGeneratorChain;
 import com.arangodb.graphql.query.ArangoTraversalQueryExecutor;
-import com.arangodb.graphql.schema.ArangoDiscriminatorDirective;
-import com.arangodb.graphql.schema.ArangoTypeAliasDirective;
-import com.arangodb.graphql.schema.ArangoVertexDirective;
 import com.arangodb.graphql.spring.ArangoGraphController;
 import graphql.GraphQL;
-import graphql.TypeResolutionEnvironment;
-import graphql.execution.instrumentation.tracing.TracingInstrumentation;
-import graphql.language.*;
 import graphql.schema.*;
 import graphql.schema.idl.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.*;
-import java.util.stream.Collectors;
-
-import static graphql.schema.idl.RuntimeWiring.newRuntimeWiring;
 
 /**
  * Auto Configuration for the GraphQL Components for ArangoDB
@@ -116,15 +108,33 @@ public class ArangoGraphQLAutoConfiguration {
         return new TypeDiscriminatorRegistry(typeDefinitionRegistry);
     }
 
+
     @Bean
-    public GraphQL graphQL(ArangoDataFetcher fetcher, TypeDefinitionRegistry typeDefinitionRegistry, TypeDiscriminatorRegistry typeDiscriminatorRegistry){
+    public GraphQLSchema graphQLSchema(ArangoDataFetcher fetcher, TypeDefinitionRegistry typeDefinitionRegistry, TypeDiscriminatorRegistry typeDiscriminatorRegistry){
 
         RuntimeWiring runtimeWiring = ArangoRuntimeWiringBuilder.newArangoRuntimeWiring(fetcher, typeDefinitionRegistry, typeDiscriminatorRegistry);
 
         SchemaGenerator schemaGenerator = new SchemaGenerator();
-        GraphQLSchema graphQLSchema = schemaGenerator.makeExecutableSchema(typeDefinitionRegistry, runtimeWiring);
-        return GraphQL.newGraphQL(graphQLSchema).build();
+        return schemaGenerator.makeExecutableSchema(typeDefinitionRegistry, runtimeWiring);
 
+    }
+
+    @Bean
+    public GraphQL graphQL(GraphQLSchema graphQLSchema){
+        return GraphQL.newGraphQL(graphQLSchema).build();
+    }
+
+    @Bean
+    public DatabaseObjectCreator databaseObjectCreator(ArangoDB.Builder arango, GraphQLSchema graphQLSchema){
+
+        return new DatabaseObjectCreator(arango.build(), properties.getDatabase(), graphQLSchema);
+
+    }
+
+    @Bean
+    @ConditionalOnProperty(name="arango.autoCreate", havingValue = "true")
+    public AutomaticDatabaseObjectCreator automaticDatabaseObjectCreator(DatabaseObjectCreator databaseObjectCreator){
+        return new AutomaticDatabaseObjectCreator(databaseObjectCreator);
     }
 
 }
