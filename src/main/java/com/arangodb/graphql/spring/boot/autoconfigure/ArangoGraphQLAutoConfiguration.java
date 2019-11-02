@@ -132,7 +132,7 @@ public class ArangoGraphQLAutoConfiguration {
     }
 
     @Bean
-    @ConditionalOnProperty(name="arango.autoCreate", havingValue = "true")
+    @ConditionalOnProperty(name="arangodb.autoCreate", havingValue = "true")
     public AutomaticDatabaseObjectCreator automaticDatabaseObjectCreator(DatabaseObjectCreator databaseObjectCreator){
         return new AutomaticDatabaseObjectCreator(databaseObjectCreator);
     }
