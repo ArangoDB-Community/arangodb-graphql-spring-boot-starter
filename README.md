@@ -121,6 +121,15 @@ arangodb:
   database: <database-name>
 ```
 
+You can also auto create your database, collections and indexes from your GraphQL schema by enabling the following 
+property in the application.yaml file
+
+```yaml
+arangodb:
+  autoCreate: true
+```
+
+
 ## Adding graphiql
 
 To add GraphiQL to your project to give you a web UI to submit queries - simply add the following to you POM.
