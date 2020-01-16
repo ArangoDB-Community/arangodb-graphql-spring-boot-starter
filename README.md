@@ -10,7 +10,7 @@ To get started, first add the starter to your project
 <dependency>
   <groupId>com.arangodb</groupId>
   <artifactId>arangodb-graphql-spring-boot-starter</artifactId>
-  <version>1.0</version>
+  <version>1.1</version>
 </dependency>
 ```
 
@@ -111,7 +111,15 @@ type Query {
 
 ## Connecting to ArangoDB
 
-TODO: Instructions on connecting to Arango Instance
+In order to connect to ArangoDB - you must provide the following configuration properties in your application.yaml file.
+
+```yaml
+arangodb:
+  hosts: <host>:<port>
+  user: <user>
+  password: <password>
+  database: <database-name>
+```
 
 ## Adding graphiql
 
@@ -563,14 +571,14 @@ query {
 }
 ```
 
-##Type Discrimination
+## Type Discrimination
 
 To help GraphQL detect the object type, you can add optional type discriminator metadata to your schema definitions. 
 
 In order to deal with inheritance via interface and union types in GraphQL the Arango GraphQL Adapter implements two 
 mechanisms to achieve type discrimination. 
 
-###Collection Based Type Discrimination
+### Collection Based Type Discrimination
 
 The default option is to use Collection Based Type Discrimination. This makes an assumption that every Document 
 collection you have in ArangoDB maps to one and only one type. 
@@ -627,7 +635,7 @@ influence your design choices for how you structure the data in your Arango data
 to store multiple document types in the same collection you will need to use Property Based Type Discrimination. 
 
 
-###Property Based Type Discrimination
+### Property Based Type Discrimination
 
 With Property Based Type Discrimination we use a property on a document to determine what concrete type to use.
 
@@ -704,7 +712,7 @@ And the following document would be classed as a ConvertibleCar
 }
 ```
 
-####Type Alias
+### Type Alias
 
 You will notice on the above example that the values in the vehicleType property in the documents directly match the 
 names of the types in your GraphQL schema. This however might not always be practical, and you may want to map 
