@@ -106,6 +106,10 @@ public class ArangoGraphQLConfigurationProperties {
      */
     private Protocol protocol = ArangoDefaults.DEFAULT_NETWORK_PROTOCOL;
 
+    /**
+     * Whether we should attempt to auto create ArangoDB databases, collections and indexes from the GraphQL schema
+     */
+    private boolean autoCreate;
 
     public String getSchemaLocation() {
         return schemaLocation;
@@ -203,4 +207,12 @@ public class ArangoGraphQLConfigurationProperties {
         this.protocol = protocol;
     }
 
+
+    public boolean isAutoCreate() {
+        return autoCreate;
+    }
+
+    public void setAutoCreate(boolean autoCreate) {
+        this.autoCreate = autoCreate;
+    }
 }
