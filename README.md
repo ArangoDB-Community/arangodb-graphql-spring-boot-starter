@@ -428,6 +428,45 @@ query {
 }
 ```
 
+## Limit, Skip and Sort
+
+The library also supports Limit, Skip and Sort. If you declare arguments on your query operation named,"limit", "skip", 
+or "sort" it will handle them accordingly.
+
+Limit and Skip have the same meaning as the AQL documentation for Limit and Skip, and should be declared as Int type. 
+You can use these arguments for implementing pagination, or simply limiting the number of results returned.
+
+Sort can be declared as a custom input type, as long as all its properties are scalar and can represent the String 
+"ASC" or "DESC". An enum is a good choice as shown in the below example.
+
+```graphql schema
+enum SortDirection {
+    ASC,
+    DESC
+}
+
+input ClientSort {
+    firstName: SortDirection
+    lastName: SortDirection
+}
+
+type Query {
+    getClients(limit: Int, skip: Int, sort: ClientSort): [Client]
+}
+```
+
+With the above schema you could have a query like this - get 10 clients, skip the first 50 ordered by ascending last 
+name:
+
+```graphql
+query {
+  getClients(limit: 10, skip: 50, sort: { lastName: ASC }) {
+    firstName
+    lastName
+  }
+}
+```
+
 ## Complex Edges
 
 You may wish to include information on an Edge document in ArangoDB, and have that be made available via your GraphQL 
